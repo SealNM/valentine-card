@@ -1,0 +1,14 @@
+{
+    "rewrites": [
+      {
+        "source": "/:folder*/:path*",
+        "destination": "/:folder*/:path*"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/:folder",
+        "dest": "/:folder/index.html"
+      }
+    ]
+  }

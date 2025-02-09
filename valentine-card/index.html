@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.14/lottie.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.min.css">
+</head>
+<body class="bg-gradient-to-br from-pink-50 to-pink-100 min-h-screen">
+    <div id="memory-overlay" class="memory-overlay opacity-0">
+        <div class="memory-content">
+            <h2 class="text-4xl mb-8 opacity-0 translate-y-4" id="question-text">
+                พร้อมจะย้อนไปดูความทรงจำหรือยัง?
+            </h2>
+            <div class="button-group opacity-0 translate-y-4" id="button-group">
+                <button id="yes-btn" class="bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 hover:scale-105">
+                    พร้อมแล้ว
+                </button>
+                <button id="no-btn" class="bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 hover:scale-105">
+                    ไม่
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="floating-hearts-container"></div>
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="envelope-address">
+                    <p>To:</p>
+                    <p>คนพิเศษ</p>
+                </div>
+                <div class="letter">
+                    <div class="text">
+                        <div>
+                            <strong class="text-2xl block mb-4" style="color: #ff5577;">
+                                Happy Valentine's Day!
+                            </strong>
+                            <p class="mb-3">ถึงคนพิเศษ,</p>
+                            <p class="mb-2">
+                                ขอบคุณที่เข้ามาเป็นส่วนหนึ่งในชีวิต ทำให้ทุกวันของฉันมีความหมายมากขึ้น
+                            </p>
+                        </div>
+                        <div class="text-center mt-2">
+                            <button id="next-btn" class="next-button">
+                                ลองกดตรงนี้
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="heart-lottie" class="heart-container"></div>
+        </div>
+    </div>
+    <script src="assets/js/script.min.js"></script>
+</body>
+</html>

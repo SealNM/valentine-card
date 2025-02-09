@@ -1,0 +1,221 @@
+.puzzle-container {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    display: none;
+    opacity: 1; /* เปลี่ยนเป็น 1 เพราะจะใช้ GSAP ควบคุมแทน */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 70;
+    gap: 2rem;
+    padding: 2rem;
+    overflow: hidden; /* ป้องกันการเลื่อนจอ */
+}
+
+.puzzle-container.active {
+    display: flex;
+}
+
+.puzzle-preview {
+    height: 100px;  /* กำหนดความสูงตายตัว */
+    width: auto;    /* ความกว้างจะคำนวณตามสัดส่วนรูป */
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    z-index: 10;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.puzzle-preview:hover {
+    transform: scale(1.05);
+}
+
+.puzzle-preview img {
+    height: 100%;   /* ให้ความสูงเต็มพื้นที่ */
+    width: auto;    /* ความกว้างปรับตามสัดส่วน */
+    object-fit: contain; /* รักษาสัดส่วนภาพ */
+}
+
+.puzzle-game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.puzzle-pieces-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: min(350px, 90vw);
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    min-height: 100px;
+}
+
+.puzzle-board {
+    width: min(350px, 90vw);
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.puzzle-cell {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    aspect-ratio: 1;
+}
+
+.puzzle-piece {
+    width: calc(33.33% - 8px);
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s ease;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.puzzle-piece:hover {
+    transform: scale(1.05);
+}
+
+.puzzle-piece.dragging {
+    opacity: 0.8;
+    cursor: grabbing;
+    z-index: 100;
+    transform: scale(1.05);
+}
+
+.puzzle-piece.empty {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+}
+
+.puzzle-cell.valid-drop {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.8);
+}
+
+.puzzle-cell.occupied {
+    border: none;
+}
+
+.moves-counter {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.win-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.win-message.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.win-message h2 {
+    font-size: 1.5rem;
+    color: #ff1493;
+    margin-bottom: 1rem;
+}
+
+.restart-button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: #ff1493;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restart-button:hover {
+    background: #ff69b4;
+    transform: translateY(-2px);
+}
+
+#puzzle-game {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.gameCanvas {
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: 1;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+#forPuzzle {
+    width: min(600px, 90vw);
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    position: relative;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+#forPuzzle:hover {
+    transform: scale(1.02);
+}
+
+.polypiece {
+    position: absolute;
+    cursor: grab !important;
+    transition: transform 0.2s ease;
+    user-select: none;
+}
+
+.polypiece.moving {
+    transition: none;
+    cursor: grabbing !important;
+    z-index: 1000 !important;
+}
+
+.moving {
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}

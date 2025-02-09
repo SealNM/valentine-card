@@ -1,0 +1,367 @@
+/* Update font import to remove Caveat */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: white;
+    --bg-envelope-color: #ffb6c5;     /* Base envelope color */
+    --envelope-tab: #ffacbd;          /* Darker tab for depth */
+    --envelope-cover: #ffc9d3;        /* Lighter front for contrast */
+    --envelope-inside: #fda2b3;       /* Darkest for inside depth */
+    --shadow-color: rgba(0, 0, 0, 0.15);  /* Darker shadow */
+    --heart-color: #ff6b8b;
+}
+
+/* Add base font for the whole app */
+body {
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+
+.container {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.envelope-wrapper {
+    background: var(--envelope-inside); /* Darker inside color */
+    box-shadow: 
+        8px 8px 10px var(--shadow-color);  /* Right and bottom shadow only */
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 0;  /* Remove any padding */
+    width: 350px;    /* กำหนดความกว้างให้เท่ากับ .envelope */
+    height: 250px;   /* กำหนดความสูงให้เท่ากับ .envelope */
+}
+
+.envelope {
+    position: relative;
+    width: 350px;
+    height: 250px;
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: 1px;  /* Changed from 0 to 1px */
+    left: 0;  /* Add this for precise positioning */
+    right: 0;  /* Add this to ensure full coverage */
+    z-index: 2;
+    border-top: 125px solid var(--envelope-tab);     /* Adjusted height */
+    border-right: 175px solid transparent;
+    border-left: 175px solid transparent;
+    transform-origin: top;
+    transition: all 0.5s ease-in-out;
+}
+
+.envelope::after {
+    content: "";
+    position: absolute;
+    top: 0;      /* Add this for precise positioning */
+    left: 0;     /* Add this for precise positioning */
+    right: 0;  /* Add this to ensure full coverage */
+    z-index: 2;
+    width: 100%;  /* Changed from 0 to 100% */
+    height: 100%;
+    border-top: 125px solid transparent;    /* Match top flap height */
+    border-right: 175px solid var(--envelope-cover);
+    border-bottom: 125px solid var(--envelope-cover);  /* Match top height */
+    border-left: 175px solid var(--envelope-cover);
+}
+
+.letter {
+    position: absolute;
+    right: 50%;
+    bottom: 5%;  /* Add some bottom spacing */
+    width: 90%;  /* Slightly reduced to prevent edge touching */
+    height: 70%;  /* เปลี่ยนจาก 85% เป็น 100% */
+    background: var(--primary);
+    text-align: center;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+                height 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0s;  /* Add height transition */
+    box-shadow: 
+        4px 4px 10px var(--shadow-color);  /* Right and bottom shadow only */
+    padding: 20px;
+    z-index: 1;
+    transform: translateX(50%);
+    border-radius: 12px;
+}
+
+.text {
+    font-family: 'Noto Sans Thai', sans-serif;  /* Remove Caveat */
+    font-style: normal;
+    color: #333;  /* Darker text color */
+    text-align: justify;
+    font-size: 1.1rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+/* For English text specifically */
+.text strong {
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.text .signature {
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-weight: 500;
+}
+
+/* Replace old heart styles with new container */
+.heart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    cursor: pointer;
+}
+
+/* Remove old heart styles */
+.heart, .heart:before, .heart:after {
+    display: none;
+}
+
+/* Opening animation */
+.flap > .envelope::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flap > .envelope > .letter {
+    transform: translate(50%, -90%);
+    height: 110%;
+}
+
+.flap {
+    transform: translateY(60px);  /* เลื่อนลงเล็กน้อยสำหรับหน้าจอปกติ */
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+/* Hover effect on opened letter */
+.flap > .envelope > .letter:hover {
+    transform: translate(50%, -160px);  /* ให้เท่ากับสถานะปกติ */
+}
+
+.envelope-address {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    transform: none;
+    text-align: left;
+    color: #333;  /* Changed to dark color */
+    font-family: 'Noto Sans Thai', sans-serif;
+    z-index: 3;
+}
+
+.envelope-address p {
+    margin: 2px 0;
+    font-size: 1rem;
+    line-height: 1.3;
+}
+
+.envelope-address p:first-child {
+    font-family: 'Noto Sans Thai', sans-serif;  /* Update To: text */
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+@media (min-width: 768px) {
+    .text {
+        font-size: 1.2rem;
+    }
+    
+
+    .envelope-wrapper {
+        width: 400px;    /* เพิ่มขนาดให้เท่ากับ envelope ในหน้าจอใหญ่ */
+        height: 300px;   /* เพิ่มขนาดให้เท่ากับ envelope ในหน้าจอใหญ่ */
+    }
+    
+    .envelope {
+        width: 400px;    /* เพิ่มขนาดตาม wrapper */
+        height: 300px;   /* เพิ่มขนาดตาม wrapper */
+    }
+
+    .envelope::before {
+        top: 1px;  /* Add this to maintain consistency at larger sizes */
+        border-top: 150px solid var(--envelope-tab);
+        border-right: 200px solid transparent;
+        border-left: 200px solid transparent;
+    }
+
+    .envelope::after {
+        border-top: 150px solid transparent;
+        border-right: 200px solid var(--envelope-cover);
+        border-bottom: 150px solid var(--envelope-cover);
+        border-left: 200px solid var(--envelope-cover);
+    }
+
+    .envelope-address {
+        bottom: 40px;
+        left: 40px;
+    }
+    
+    .envelope-address p {
+        font-size: 1.1rem;
+    }
+    
+    .envelope-address p:last-child {
+        font-size: 1.3rem;
+    }
+
+    .flap > .envelope > .letter {
+        transform: translate(50%, -200px);  /* ปรับค่าตำแหน่งใหม่สำหรับหน้าจอใหญ่ */
+        height: 110%;  /* คงความสูงไว้เท่าเดิม */
+    }
+
+    /* Hover effect on opened letter for large screens */
+    .flap > .envelope > .letter:hover {
+        transform: translate(50%, -200px);  /* ให้เท่ากับสถานะปกติ */
+    }
+
+    .flap {
+        transform: translateY(30px);  /* ปรับระยะการเลื่อนลงให้น้อยลงสำหรับหน้าจอใหญ่ */
+    }
+}
+
+/* Modify hover effect to only work when envelope is closed */
+.envelope-wrapper:not(.flap):hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        12px 12px 10px var(--shadow-color);  /* Increased shadow on hover */
+    transition: all 0.3s ease;
+}
+
+#floating-hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 2;  /* Behind envelope front, but above envelope back */
+    overflow: visible;
+}
+
+.floating-heart {
+    position: absolute;
+    width: 50px;  /* Reduced from 80px */
+    height: 50px;
+    opacity: 1;  /* Always fully visible */
+}
+
+.next-button {
+    padding: 8px 20px;
+    background: var(--heart-color);
+    color: white;
+    border-radius: 20px;
+    border: none;
+    font-family: 'Noto Sans Thai', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.next-button:hover {
+    transform: scale(1.05);
+    background: #ff3366;
+}
+
+.memory-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 105, 180, 0.97);  /* Hot pink with high opacity */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Remove transitions from elements since GSAP will handle them */
+.memory-overlay,
+.memory-content,
+#question-text,
+#button-group {
+    transition: none;
+}
+
+.memory-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.memory-content {
+    text-align: center;
+    color: white;
+    opacity: 0;
+    transform: translateY(40px);
+    padding: 2rem;
+}
+
+#question-text,
+#button-group {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Remove transition since we're using GSAP */
+.memory-overlay,
+.memory-content,
+#question-text,
+#button-group {
+    transition: none;
+}
+
+.memory-content h2 {
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.memory-overlay.active .memory-content {
+    transform: translateY(0);
+}
+
+.button-group {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+/* Remove old button styles */
+.yes-button, .no-button {
+    display: none;
+}
+
+/* เพิ่ม styles สำหรับปุ่มในส่วน memory-overlay */
+#button-group {
+    position: relative; /* เพิ่มเพื่อให้ z-index ทำงาน */
+}
+
+#no-btn {
+    position: relative;
+    z-index: 2; /* ให้ปุ่ม "ไม่" อยู่ด้านหน้าเสมอ */
+}
+
+#yes-btn {
+    position: relative;
+    z-index: 1; /* ให้ปุ่ม "พร้อมแล้ว" อยู่ด้านหลัง */
+}
+
+#yes-btn, #no-btn {
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-weight: 500;
+}

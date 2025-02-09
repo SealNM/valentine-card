@@ -10,16 +10,16 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <!-- แก้ไขจาก script เป็น link สำหรับ Remix Icon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/memories.min.css">
+    <link rel="stylesheet" href="/assets/css/memories.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="assets/css/puzzle.min.css">
+    <link rel="stylesheet" href="/assets/css/puzzle.min.css">
     <!-- <script src="assets/js/puzzle.js"></script> -->
 </head>
 <body class="bg-gradient-to-br from-pink-50 to-pink-100 min-h-screen opacity-0">
     <!-- Banner image -->
     <div class="banner-container opacity-0 translate-y-4">
-        <img src="assets/img/vietnam-8560197_1280.jpg" 
+        <img src="/assets/img/vietnam-8560197_1280.jpg" 
              alt="Memory" 
              class="banner-img">
     </div>
@@ -66,7 +66,7 @@
                 <!-- ตรวจสอบ path ของรูปภาพให้ถูกต้อง -->
                 <div class="swiper-slide">
                     <div class="memory-card">
-                        <img src="assets/img/friends-4922436_1280.jpg" alt="Memory 1">
+                        <img src="/assets/img/friends-4922436_1280.jpg" alt="Memory 1">
                         <div class="memory-caption">
                             ความทรงจำแรกของเรา
                         </div>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="memory-card">
-                        <img src="assets/img/couple-7127168_1280.jpg" alt="Memory 2">
+                        <img src="/assets/img/couple-7127168_1280.jpg" alt="Memory 2">
                         <div class="memory-caption">
                             วันที่เราไปเที่ยวด้วยกัน
                         </div>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="memory-card">
-                        <img src="assets/img/couple-5176740_1280.jpg" alt="Memory 2">
+                        <img src="/assets/img/couple-5176740_1280.jpg" alt="Memory 2">
                         <div class="memory-caption">
                             ตอนที่เดินจูงมือกัน
                         </div>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="memory-card">
-                        <img src="assets/img/proposal-7167710_1280.jpg" alt="Memory 2">
+                        <img src="/assets/img/proposal-7167710_1280.jpg" alt="Memory 2">
                         <div class="memory-caption">
                             รูปวาดแรกของเรา
                         </div>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="memory-card">
-                        <img src="assets/img/cupcakes-380178_1280.jpg" alt="Memory 2">
+                        <img src="/assets/img/cupcakes-380178_1280.jpg" alt="Memory 2">
                         <div class="memory-caption">
                             ตอนวันเกิด
                         </div>
@@ -116,7 +116,7 @@
     <!-- เพิ่มส่วนเกมจิ๊กซอว์ -->
     <div class="puzzle-container">
         <div class="puzzle-preview">
-            <img src="assets/img/couple-5895731_1280.jpg" alt="Target Image" id="puzzle-target-image" crossorigin="anonymous">
+            <img src="/assets/img/couple-5895731_1280.jpg" alt="Target Image" id="puzzle-target-image" crossorigin="anonymous">
         </div>
         <div id="puzzle-game">
             <div id="forPuzzle"></div>
@@ -188,7 +188,7 @@
         window.autoStart = true; // เปลี่ยนกลับเป็น true
         window.checkComplete = false;
 
-        let imgSrc = "assets/img/couple-5895731_1280.jpg";
+        let imgSrc = "/assets/img/couple-5895731_1280.jpg";
         let setCorrectPassword = "1234";
         let setVideoId = "JQqeRJQkVrQ";
         let setStartDate = "2024-02-14T00:00:00";
@@ -202,7 +202,7 @@
 รักนะคะ ❤️`;
 
     </script>
-    <script src="assets/js/jigsaw.min.js"></script>
-    <script src="assets/js/memories.min.js"></script>
+    <script src="/assets/js/jigsaw.min.js"></script>
+    <script src="/assets/js/memories.min.js"></script>
 </body>
 </html>

@@ -365,3 +365,21 @@ body {
     font-family: 'Noto Sans Thai', sans-serif;
     font-weight: 500;
 }
+
+#button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+#no-btn, #yes-btn {
+    position: relative; /* เปลี่ยนจาก absolute เป็น relative */
+    padding: 10px 30px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Noto Sans Thai', sans-serif;
+    transition: all 0.3s ease;
+    
+}

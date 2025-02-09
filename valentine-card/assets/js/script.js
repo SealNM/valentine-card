@@ -163,32 +163,45 @@ document.addEventListener('DOMContentLoaded', () => {
     noBtn.addEventListener('click', () => {
         noClickCount++;
         
-        // ปรับค่าการขยายให้เพิ่มขึ้นทีละน้อย
-        const scale = 1 + (noClickCount * 0.2); // ลดจาก 0.5 เป็น 0.2
-        const newWidth = Math.min(80, 20 + (noClickCount * 8)); // ปรับค่าการขยายความกว้าง
-        const newHeight = Math.min(60, 15 + (noClickCount * 6)); // ปรับค่าการขยายความสูง
+        // ปรับค่าการขยายและความมนของปุ่ม
+        const scale = 1 + (noClickCount * 0.2);
+        const newSize = Math.min(60, 20 + (noClickCount * 8)); // ใช้ขนาดเดียวกันทั้งความกว้างและความสูง
+        const borderRadius = Math.max(50 - (noClickCount * 8), 25); // ลดความมนลงเรื่อยๆ แต่ไม่ต่ำกว่า 25%
         
-        // ย้ายปุ่ม "ไม่" ไปทางขวา
-        gsap.to(noBtn, {
-            x: noClickCount * 50, // เลื่อนไปทางขวาทีละน้อย
-            duration: 0.3,
-            ease: "power2.out"
-        });
+        // สุ่มตำแหน่งใหม่สำหรับปุ่ม "ไม่"
+        const yesBtnRect = yesBtn.getBoundingClientRect();
+        const noBtnRect = noBtn.getBoundingClientRect();
         
-        // Animate yes button growth
-        gsap.to('#yes-btn', {
-            scale: scale,
-            width: `${newWidth}vw`,
-            height: `${newHeight}vh`,
-            duration: 0.5,
-            ease: "elastic.out(1, 0.5)",
-            fontSize: `${Math.min(2 + (noClickCount * 0.3), 4)}rem` // ปรับขนาดตัวอักษรให้โตช้าลง
-        });
-
-        // If clicked 5 times, remove no button
-        if (noClickCount >= 5) {
+        if (noClickCount < 7) {
+            // คำนวณรัศมีการเคลื่อนที่ที่เพิ่มขึ้นตามจำนวนครั้งที่กด
+            const radius = 50 + (noClickCount * 30); // เริ่มที่ 50px และเพิ่มขึ้นทีละ 30px
+            
+            // สุ่มมุมในการเคลื่อนที่ (0-360 องศา)
+            const angle = Math.random() * Math.PI * 2;
+            
+            // คำนวณตำแหน่งใหม่จากตำแหน่งเริ่มต้นของปุ่ม
+            const startX = noBtnRect.left;
+            const startY = noBtnRect.top;
+            
+            let newX = startX + (Math.cos(angle) * radius);
+            let newY = startY + (Math.sin(angle) * radius);
+            
+            // ป้องกันไม่ให้ปุ่มออกนอกหน้าจอ
+            const padding = 20; // ระยะห่างจากขอบหน้าจอ
+            newX = Math.max(padding, Math.min(newX, window.innerWidth - noBtnRect.width - padding));
+            newY = Math.max(padding, Math.min(newY, window.innerHeight - noBtnRect.height - padding));
+            
+            // เคลื่อนย้ายปุ่ม "ไม่" ไปยังตำแหน่งใหม่
             gsap.to(noBtn, {
-                x: window.innerWidth, // เลื่อนออกนอกหน้าจอ
+                x: newX - startX,
+                y: newY - startY,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        } else {
+            // ครั้งที่ 5 เคลื่อนที่ออกนอกจอ
+            gsap.to(noBtn, {
+                x: window.innerWidth,
                 duration: 0.5,
                 ease: "power2.inOut",
                 onComplete: () => {
@@ -201,6 +214,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         ease: "power2.inOut"
                     });
                 }
+            });
+        }
+        
+        // ปรับ animation ของปุ่ม yes ให้เหมือนลูกโป่ง
+        gsap.to('#yes-btn', {
+            scale: scale,
+            width: `${newSize}vmin`, // ใช้ vmin แทน vw เพื่อให้ขนาดสัมพันธ์กับหน้าจอ
+            height: `${newSize}vmin`,
+            borderRadius: `${borderRadius}%`,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)", // ปรับ elastic ให้ดูเหมือนยางยืด
+            fontSize: `${Math.min(2 + (noClickCount * 0.3), 4)}rem`,
+            boxShadow: `0 ${4 + (noClickCount * 2)}px ${15 + (noClickCount * 5)}px rgba(255, 107, 139, ${0.3 + (noClickCount * 0.1)})` // เพิ่มเงาตามขนาด
+        });
+
+        // ในกรณีที่กดครบ 5 ครั้ง
+        if (noClickCount >= 7) {
+            gsap.to('#yes-btn', {
+                width: "100vw",
+                height: "100vh",
+                borderRadius: "0%", // ยกเลิกความมนเมื่อเต็มจอ
+                duration: 1,
+                ease: "power2.inOut",
+                boxShadow: "none" // ยกเลิกเงาเมื่อเต็มจอ
             });
         }
     });

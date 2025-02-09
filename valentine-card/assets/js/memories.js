@@ -604,20 +604,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // ฟังก์ชันสำหรับสร้างหัวใจลอย
+        let lastHeartTime = 0;  // เพิ่มตัวแปรเก็บเวลาที่สร้างหัวใจล่าสุด
+        const HEART_THROTTLE = 150;  // กำหนดระยะห่างขั้นต่ำระหว่างการสร้างหัวใจ (มิลลิวินาที)
+        const MAX_HEARTS = 10;  // กำหนดจำนวนหัวใจสูงสุดที่แสดงพร้อมกัน
+        let activeHearts = 0;  // เพิ่มตัวแปรนับจำนวนหัวใจที่กำลังแสดงอยู่
+        
         function createFloatingHeart(x, y) {
+            const currentTime = Date.now();
+            
+            // ตรวจสอบเงื่อนไขก่อนสร้างหัวใจใหม่
+            if (currentTime - lastHeartTime < HEART_THROTTLE || activeHearts >= MAX_HEARTS) {
+                return;
+            }
+            
+            lastHeartTime = currentTime;
+            activeHearts++;
+        
             const heart = document.createElement('div');
             heart.style.cssText = `
                 position: absolute;
                 left: ${x}px;
                 top: ${y}px;
-                width: 40px;
-                height: 40px;
+                width: 30px;  // ลดขนาดลงเล็กน้อย
+                height: 30px;
                 pointer-events: none;
                 z-index: 1001;
             `;
             scratchContainer.appendChild(heart);
-
-            // สร้าง Lottie animation สำหรับหัวใจ
+        
+            // สร้าง Lottie animation แบบ lightweight
             const heartAnim = lottie.loadAnimation({
                 container: heart,
                 renderer: 'svg',
@@ -625,15 +640,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 autoplay: true,
                 path: 'https://fonts.gstatic.com/s/e/notoemoji/latest/2728/lottie.json'
             });
-
+        
             // Animation ให้หัวใจลอยขึ้นและหายไป
             gsap.to(heart, {
-                y: -100,
-                x: gsap.utils.random(-50, 50),
+                y: -80,
+                x: gsap.utils.random(-30, 30),
                 opacity: 0,
-                duration: 1,
+                duration: 0.8,
                 ease: 'power1.out',
-                onComplete: () => heart.remove()
+                onComplete: () => {
+                    heart.remove();
+                    activeHearts--;
+                }
             });
         }
 
